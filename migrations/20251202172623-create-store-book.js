@@ -11,11 +11,17 @@ module.exports = {
       },
       storeId: {
         type: Sequelize.INTEGER,
-        unique: true,
+        allowNull: false,
+        references: { model: 'Stores', key: 'id' },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       bookId: {
         type: Sequelize.INTEGER,
-        unique: true,
+        allowNull: false,
+        references: { model: 'Books', key: 'id' },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       price: {
         type: Sequelize.DECIMAL

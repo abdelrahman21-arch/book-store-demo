@@ -1,5 +1,5 @@
-require('dotenv').config();
-
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../profolio-bookstore/.env') });
 module.exports = {
   development: {
     username: process.env.DB_USER || 'postgres',
