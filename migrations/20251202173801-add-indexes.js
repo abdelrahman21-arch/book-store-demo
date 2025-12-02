@@ -3,20 +3,27 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    /**
-     * Add altering commands here.
-     *
-     * Example:
-     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
-     */
+    await queryInterface.addIndex('Books', ['authorId']);
+
+    await queryInterface.addIndex(
+      'StoreBooks',
+      ['storeId', 'bookId'],
+      { unique: true, name: 'storebooks_store_book_uq' }
+    );
+    await queryInterface.addIndex('StoreBooks', ['storeId']);
+    await queryInterface.addIndex('StoreBooks', ['bookId']);
+    await queryInterface.addIndex(
+      'StoreBooks',
+      ['storeId', 'soldOut'],
+      { name: 'storebooks_store_soldout_idx' }
+    );
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
+    await queryInterface.removeIndex('StoreBooks', 'storebooks_store_soldout_idx');
+    await queryInterface.removeIndex('StoreBooks', 'storebooks_store_book_uq');
+    await queryInterface.removeIndex('StoreBooks', ['bookId']);
+    await queryInterface.removeIndex('StoreBooks', ['storeId']);
+    await queryInterface.removeIndex('Books', ['authorId']);
   }
 };
